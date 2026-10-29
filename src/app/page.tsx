@@ -123,68 +123,66 @@ export default function Home() {
         }
       }
     } catch (err) {
-      console.log("n8n live request finished (fallback to current data)");
+      console.log("n8n live request finished");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#141211] text-[#E6E1DA] font-sans antialiased selection:bg-[#C2A382] selection:text-[#141211]">
+    <div className="min-h-screen bg-[#11100F] text-[#F5F2EC] font-[-apple-system,BlinkMacSystemFont,'SF_Pro_Text','SF_Pro_Display','Segoe_UI',Roboto,Helvetica,Arial,sans-serif] antialiased selection:bg-[#C2A382]/30 selection:text-white">
       
-      {/* Top Header */}
-      <header className="border-b border-[#262220] bg-[#1A1716] px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center space-x-3">
-            <span className="font-serif tracking-widest text-xl text-[#F2ECE4] uppercase font-semibold">OBBRO</span>
-            <span className="text-xs text-[#8C827A] border-l border-[#332E2B] pl-3 py-0.5 tracking-wider uppercase">System Operacyjny</span>
-          </div>
+      {/* Apple-style macOS Header */}
+      <header className="border-b border-[#221F1D] bg-[#161413]/80 backdrop-blur-md px-8 py-3.5 flex items-center justify-between sticky top-0 z-50">
+        <div className="flex items-center space-x-4">
+          <span className="font-medium tracking-[0.2em] text-sm text-[#F5F2EC]">OBBRO</span>
+          <span className="text-[11px] text-[#7A7067] tracking-wider uppercase font-light border-l border-[#2E2825] pl-4">System Operacyjny</span>
         </div>
 
-        <div className="flex items-center space-x-6 text-xs text-[#A69B91]">
+        <div className="flex items-center space-x-6 text-[12px] text-[#9E948A] font-light">
           <div className="flex items-center space-x-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8A9A86]"></span>
-            <span>Silnik n8n: Aktywny</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#7C9A73]"></span>
+            <span>n8n Live Engine</span>
           </div>
-          <span className="text-[#332E2B]">|</span>
-          <span>Średni czas analizy: 1.2s</span>
+          <span className="text-[#2E2825]">/</span>
+          <span>Autonomia: 89%</span>
         </div>
       </header>
 
-      {/* Main Container */}
-      <div className="max-w-[1600px] mx-auto p-8 grid grid-cols-12 gap-8">
+      {/* Main Workspace */}
+      <div className="max-w-[1500px] mx-auto p-8 grid grid-cols-12 gap-8">
         
-        {/* Left Column: Tickets List */}
+        {/* Left Column: Minimal Ticket Stream */}
         <div className="col-span-4 space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-[#262220]">
-            <span className="text-xs font-medium uppercase tracking-wider text-[#8C827A]">Oczekujące Zgłoszenia</span>
-            <span className="text-xs px-2 py-0.5 bg-[#262220] text-[#C2A382] rounded font-mono">{tickets.length}</span>
+          <div className="flex items-center justify-between pb-3 border-b border-[#221F1D]">
+            <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-[#8C827A]">Kolejka Zgłoszeń</span>
+            <span className="text-[11px] text-[#A3988E] font-mono">{tickets.length}</span>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {tickets.map((t) => {
               const isSelected = selectedTicket.id === t.id;
               return (
                 <div
                   key={t.id}
                   onClick={() => handleSelectTicket(t)}
-                  className={`p-4 rounded-lg cursor-pointer transition-all border ${
+                  className={`p-4 rounded-xl cursor-pointer transition-all duration-150 border ${
                     isSelected
-                      ? "bg-[#211E1C] border-[#C2A382]/40 shadow-sm"
-                      : "bg-[#1A1716]/60 border-[#262220] hover:bg-[#1A1716] hover:border-[#332E2B]"
+                      ? "bg-[#1E1B19] border-[#C2A382]/30 shadow-sm"
+                      : "bg-[#161413]/40 border-transparent hover:bg-[#1A1817] hover:border-[#26211F]"
                   }`}
                 >
-                  <div className="flex items-center justify-between text-xs text-[#8C827A] mb-1.5">
-                    <span className="font-mono text-[#C2A382]">{t.id}</span>
-                    <span>{t.time}</span>
+                  <div className="flex items-center justify-between text-[11px] text-[#8C827A] mb-1 font-mono">
+                    <span className="text-[#C2A382] font-normal">{t.id}</span>
+                    <span className="font-light">{t.time}</span>
                   </div>
-                  <div className="font-medium text-sm text-[#F2ECE4] mb-1">{t.topic}</div>
-                  <div className="text-xs text-[#A69B91] line-clamp-2 leading-relaxed mb-3">
+                  <div className="font-normal text-[13px] text-[#F5F2EC] mb-1 tracking-tight">{t.topic}</div>
+                  <div className="text-[12px] text-[#9E948A] line-clamp-2 font-light leading-relaxed mb-3">
                     {t.message}
                   </div>
-                  <div className="flex items-center justify-between text-[11px] text-[#8C827A] pt-2 border-t border-[#262220]/60">
+                  <div className="flex items-center justify-between text-[11px] text-[#7A7067] pt-2.5 border-t border-[#221F1D]/50 font-light">
                     <span>{t.client}</span>
-                    <span className="text-[#A69B91]">{t.source}</span>
+                    <span className="text-[#8C827A]">{t.source}</span>
                   </div>
                 </div>
               );
@@ -192,66 +190,68 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Column: Operational Inspector View */}
-        <div className="col-span-8 bg-[#1A1716] border border-[#262220] rounded-lg p-6 space-y-6">
+        {/* Right Column: Clean macOS Card Inspector */}
+        <div className="col-span-8 bg-[#161413] border border-[#221F1D] rounded-2xl p-8 space-y-8 shadow-2xl">
           
-          {/* Section 1: Ticket & Client Details */}
-          <div className="space-y-3 pb-6 border-b border-[#262220]">
+          {/* Header Info */}
+          <div className="space-y-4 pb-6 border-b border-[#221F1D]">
             <div className="flex items-start justify-between">
               <div>
-                <div className="text-xs font-mono text-[#C2A382] mb-1">{selectedTicket.id} &bull; Zamówienie: {selectedTicket.orderId}</div>
-                <h1 className="text-xl font-medium text-[#F2ECE4]">{selectedTicket.topic}</h1>
+                <div className="text-[11px] font-mono text-[#C2A382] tracking-wide mb-1.5">
+                  {selectedTicket.id} &bull; Ref: {selectedTicket.orderId}
+                </div>
+                <h1 className="text-xl font-normal text-[#F5F2EC] tracking-tight">{selectedTicket.topic}</h1>
               </div>
               <div className="text-right">
-                <span className="text-xs text-[#8C827A] block">Kanał</span>
-                <span className="text-sm text-[#E6E1DA]">{selectedTicket.source}</span>
+                <span className="text-[11px] text-[#7A7067] block uppercase tracking-wider font-light">Kanał</span>
+                <span className="text-[13px] text-[#E0D9CE] font-light">{selectedTicket.source}</span>
               </div>
             </div>
 
-            <div className="bg-[#141211] p-4 rounded border border-[#262220] text-sm text-[#D4CBC0] leading-relaxed">
-              <div className="text-xs text-[#8C827A] mb-1 font-medium">{selectedTicket.client}:</div>
-              "{selectedTicket.message}"
+            <div className="bg-[#11100F] p-4.5 rounded-xl border border-[#221F1D] text-[13px] text-[#D4CBC0] leading-relaxed font-light">
+              <div className="text-[11px] text-[#8C827A] mb-1 font-normal tracking-wide uppercase">{selectedTicket.client}:</div>
+              „{selectedTicket.message}”
             </div>
           </div>
 
-          {/* Section 2: ERP & System Data */}
+          {/* ERP / Integrations Data Stack */}
           <div className="space-y-3">
-            <div className="text-xs font-medium uppercase tracking-wider text-[#8C827A]">
-              Dane z Systemów Wewnętrznych (ERP / Kurier / Procedury)
+            <div className="text-[11px] font-medium uppercase tracking-[0.15em] text-[#8C827A]">
+              Zweryfikowane Dane Systemowe (ERP & API)
             </div>
             
             <div className="space-y-2">
               {selectedTicket.aiAnalysis.retrievedData.map((dataItem, idx) => (
-                <div key={idx} className="bg-[#141211]/80 px-4 py-2.5 rounded border border-[#262220] text-xs font-mono text-[#C2A382] flex items-center justify-between">
+                <div key={idx} className="bg-[#11100F]/90 px-4 py-3 rounded-xl border border-[#221F1D] text-[12px] font-mono text-[#D4B594] flex items-center justify-between font-light">
                   <span>{dataItem}</span>
-                  <span className="text-[10px] text-[#8C827A] uppercase tracking-wider">Zweryfikowano</span>
+                  <span className="text-[10px] text-[#7C9A73] uppercase tracking-widest bg-[#7C9A73]/10 px-2 py-0.5 rounded">Zweryfikowano</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Section 3: AI Analysis & Proposed Response */}
-          <div className="space-y-4 pt-2">
+          {/* AI Draft & Response Section */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium uppercase tracking-wider text-[#8C827A]">
-                Sugerowana Odpowiedź i Akcja Operacyjna
+              <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-[#8C827A]">
+                Sugerowana Odpowiedź Agencji
               </span>
-              <span className="text-xs text-[#8A9A86] bg-[#8A9A86]/10 px-2.5 py-1 rounded border border-[#8A9A86]/20">
+              <span className="text-[11px] text-[#7C9A73] bg-[#7C9A73]/10 px-3 py-1 rounded-full font-light border border-[#7C9A73]/20">
                 Sentyment: {selectedTicket.aiAnalysis.sentiment}
               </span>
             </div>
 
             <div className="relative">
               {loading && (
-                <div className="absolute inset-0 bg-[#1A1716]/90 backdrop-blur-sm flex items-center justify-center rounded z-10">
-                  <span className="text-xs text-[#C2A382] font-mono animate-pulse">Przetwarzanie zapytania przez n8n i OpenAI...</span>
+                <div className="absolute inset-0 bg-[#161413]/90 backdrop-blur-md flex items-center justify-center rounded-xl z-10">
+                  <span className="text-[12px] text-[#C2A382] font-mono font-light tracking-wide animate-pulse">Łączenie z silnikiem n8n & OpenAI...</span>
                 </div>
               )}
 
-              <div className="bg-[#141211] p-4 rounded border border-[#262220] space-y-3">
+              <div className="bg-[#11100F] p-5 rounded-xl border border-[#221F1D] space-y-4">
                 <textarea
-                  className="w-full bg-transparent text-sm text-[#F2ECE4] focus:outline-none resize-none leading-relaxed"
-                  rows={5}
+                  className="w-full bg-transparent text-[13px] text-[#F5F2EC] focus:outline-none resize-none leading-relaxed font-light"
+                  rows={4}
                   value={selectedTicket.aiAnalysis.draftResponse}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -262,31 +262,29 @@ export default function Home() {
                   }}
                 />
 
-                <div className="pt-3 border-t border-[#262220] flex items-center justify-between text-xs text-[#8C827A]">
-                  <div>
-                    <span className="text-[#A69B91]">Notatka systemowa: </span>
-                    {selectedTicket.aiAnalysis.internalNote}
-                  </div>
+                <div className="pt-3 border-t border-[#221F1D] text-[11px] text-[#7A7067] font-light">
+                  <span className="text-[#A3988E]">Notatka wewnętrzna: </span>
+                  {selectedTicket.aiAnalysis.internalNote}
                 </div>
               </div>
             </div>
 
-            {/* Action Bar */}
-            <div className="pt-2 flex items-center justify-between">
-              <div className="text-xs text-[#8C827A]">
-                Akcja wyśle odpowiedź na {selectedTicket.source} oraz wygeneruje dokument w ERP.
+            {/* Apple Clean Action Bar */}
+            <div className="pt-3 flex items-center justify-between">
+              <div className="text-[11px] text-[#7A7067] font-light">
+                Zatwierdzenie wyśle odpowiedź bezpośrednio na kanał {selectedTicket.source}.
               </div>
 
               <button
                 onClick={() => setApproved(true)}
                 disabled={approved}
-                className={`px-6 py-2.5 rounded text-xs font-medium tracking-wide transition-all ${
+                className={`px-6 py-2.5 rounded-lg text-[12px] font-normal tracking-wide transition-all duration-150 ${
                   approved
-                    ? "bg-[#8A9A86] text-[#141211] cursor-default"
-                    : "bg-[#C2A382] text-[#141211] hover:bg-[#D4B594] active:scale-[0.99]"
+                    ? "bg-[#7C9A73] text-[#11100F] cursor-default"
+                    : "bg-[#E6E1DA] text-[#11100F] hover:bg-white active:scale-[0.98] shadow-sm"
                 }`}
               >
-                {approved ? "Zatwierdzono i Wysłano" : "Zatwierdź i Wyślij"}
+                {approved ? "Wysłano pomyślnie" : "Zatwierdź i Wyślij"}
               </button>
             </div>
           </div>
